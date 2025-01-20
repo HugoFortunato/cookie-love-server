@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TokenType {
+  PASSWORD_RECOVER
+}
+
+model User {
+  id   String  @id @default(uuid())
+  name String?
+
+  email           String         @unique
+  passwordHash    String?        @map("password_hash")
+  sharedPhrases   SharedPhrase[] @relation("SharedBy")
+  receivedPhrases SharedPhrase[] @relation("SharedWith")
+  Token           Token[]
+}
+
+model Token {
+  id        String    @id @default(uuid())
+  type      TokenType
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  @@map("tokens")
+}
+
+model Phrase {
+  id           String         @id @default(uuid())
+  content      String
+  SharedPhrase SharedPhrase[]
+}
+
+model SharedPhrase {
+  id         Int      @id @default(autoincrement())
+  senderId   String
+  receiverId String
+  phraseId   String
+  sentAt     DateTime @default(now())
+
+  sender   User   @relation("SharedBy", fields: [senderId], references: [id])
+  receiver User   @relation("SharedWith", fields: [receiverId], references: [id])
+  phrase   Phrase @relation(fields: [phraseId], references: [id])
+}

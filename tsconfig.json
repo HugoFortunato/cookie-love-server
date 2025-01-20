@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./types", "./node_modules/@types"],
+    "strict": true
+  },
+  "include": ["./types/**/*.d.ts", "./fastify.d.ts"]
+}
