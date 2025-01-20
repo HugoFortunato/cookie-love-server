@@ -40,7 +40,7 @@ model Phrase {
 }
 
 model SharedPhrase {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(uuid())
   senderId   String
   receiverId String
   phraseId   String

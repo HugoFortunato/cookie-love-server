@@ -57,12 +57,8 @@ export async function getReceivedPhrases(app: FastifyInstance) {
         }
 
         const correctedPhrases = userPhrases.receivedPhrases.map((item) => {
-          const content = item.phrase?.content || '';
-          const correctedPhrase = content.replace(/^\w/, (c) =>
-            c.toUpperCase()
-          );
-
           const phraseId = item.phrase?.id || '';
+          const correctedPhrase = item.phrase?.content;
 
           return { phrase: correctedPhrase, id: phraseId };
         });
