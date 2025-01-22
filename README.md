@@ -2,6 +2,8 @@
 
 ## pnpm
 
+..
+
 pnpm run dev
 
 pnpm prisma init
