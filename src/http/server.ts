@@ -18,6 +18,7 @@ import { requestPasswordRecover } from './routes/auth/request-password-recover';
 import { getPhrase } from './routes/phrase/get-phrase';
 import { sharePhrase } from './routes/phrase/share-phrase';
 import { getReceivedPhrases } from './routes/phrase/get-received-phrases';
+import { sendInvite } from './routes/phrase/send-invite';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -49,7 +50,7 @@ app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler);
 
 app.register(fastifyJwt, {
-  secret: 'my-jwt-secret',
+  secret: process.env.JWT_SECRET || 'my-jwt-secret',
 });
 
 app.register(fastifyCors);
@@ -62,7 +63,8 @@ app.register(authenticateWithPassword);
 app.register(getPhrase);
 app.register(sharePhrase);
 app.register(getReceivedPhrases);
+app.register(sendInvite);
 
-app.listen({ port: 3333 }).then(() => {
-  console.log('HTTP server running!');
+app.listen({ port: Number(process.env.PORT) }).then(() => {
+  console.log(`HTTP server running in ${process.env.PORT}`);
 });

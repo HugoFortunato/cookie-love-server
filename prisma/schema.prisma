@@ -36,7 +36,7 @@ model Token {
 model Phrase {
   id           String         @id @default(uuid())
   content      String
-  SharedPhrase SharedPhrase[]
+  sharedPhrase SharedPhrase[]
 }
 
 model SharedPhrase {

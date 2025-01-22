@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import nodemailer from 'nodemailer';
+
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { prisma } from '../../../lib/prisma';
@@ -38,45 +38,19 @@ export async function sharePhrase(app: FastifyInstance) {
           throw new BadRequestError('Sender not found.');
         }
 
-        const [, domain] = recipientEmail.split('@');
-
         const recipient = await prisma.user.findUnique({
           select: { id: true },
           where: { email: recipientEmail },
         });
 
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: senderId.email,
-            pass: 'suasenhaoudotoken',
-          },
-        });
-
         if (!recipient) {
-          const mailOptions = {
-            from: senderId.email,
-            to: 'fort88.hug@gmail.com',
-            subject: 'Usuário não encontrado',
-            text: `O usuário ${!recipient ? 'recipient' : 'sender'} não foi encontrado.`,
-            html: `<p>O usuário <strong>${!recipient ? 'recipient' : 'sender'}</strong> não foi encontrado.</p>`,
-          };
-
-          try {
-            const info = await transporter.sendMail(mailOptions);
-            console.log('E-mail enviado:', info.messageId);
-          } catch (error) {
-            console.error('Erro ao enviar o e-mail:', error);
-          }
-          throw new BadRequestError(
-            'Recipient not found. We sent you an email.'
-          );
+          throw new BadRequestError('Recipient not found.');
         }
 
         const phrase = await prisma.phrase.create({
           data: {
             content: content,
-            SharedPhrase: {
+            sharedPhrase: {
               create: {
                 senderId: senderId,
                 receiverId: recipient.id,
