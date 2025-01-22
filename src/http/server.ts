@@ -65,6 +65,6 @@ app.register(sharePhrase);
 app.register(getReceivedPhrases);
 app.register(sendInvite);
 
-app.listen({ port: Number(process.env.PORT) }).then(() => {
+app.listen({ port: Number(process.env.PORT), host: '0.0.0.0' }).then(() => {
   console.log(`HTTP server running in ${process.env.PORT}`);
 });
