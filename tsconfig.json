@@ -1,7 +1,15 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./types", "./node_modules/@types"],
-    "strict": true
+    "target": "ES2020", // Para suporte a BigInt
+    "lib": ["ES2020", "DOM"], // Inclua ES2020 para BigInt e Set/Map
+    "module": "CommonJS", // Ou "ESNext", dependendo do seu projeto
+    "moduleResolution": "Node",
+    "types": ["node"], // Inclua os tipos do Node.js
+    "strict": true, // Para melhores verificações de tipo
+    "esModuleInterop": true, // Para suporte a importações de módulos comuns
+    "skipLibCheck": true, // Ignorar verificação de tipos nas dependências
+    "outDir": "./dist"
   },
-  "include": ["./types/**/*.d.ts", "./fastify.d.ts"]
+  "include": ["src/**/*.ts"], // Altere conforme a estrutura do projeto
+  "exclude": ["node_modules"]
 }
