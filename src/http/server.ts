@@ -1,5 +1,5 @@
-import fastifyCors from '@fastify/cors';
 import fastify from 'fastify';
+import fastifyCors from '@fastify/cors';
 import fastifyJwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUI from '@fastify/swagger-ui';
@@ -11,14 +11,14 @@ import {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod';
 
-import { createAccount } from './routes/auth/create-account';
-import { authenticateWithPassword } from './routes/auth/authenticate-with-password';
-import { resetPassword } from './routes/auth/reset-password';
-import { requestPasswordRecover } from './routes/auth/request-password-recover';
 import { getPhrase } from './routes/phrase/get-phrase';
-import { sharePhrase } from './routes/phrase/share-phrase';
-import { getReceivedPhrases } from './routes/phrase/get-received-phrases';
 import { sendInvite } from './routes/phrase/send-invite';
+import { sharePhrase } from './routes/phrase/share-phrase';
+import { createAccount } from './routes/auth/create-account';
+import { resetPassword } from './routes/auth/reset-password';
+import { getReceivedPhrases } from './routes/phrase/get-received-phrases';
+import { authenticateWithPassword } from './routes/auth/authenticate-with-password';
+import { requestPasswordRecover } from './routes/auth/request-password-recover';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 

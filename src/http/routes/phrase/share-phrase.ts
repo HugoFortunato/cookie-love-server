@@ -1,7 +1,7 @@
 import { z } from 'zod';
-
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
+
 import { prisma } from '../../../lib/prisma';
 import { auth } from '../../middleware/auth';
 import { BadRequestError } from '../../../http/routes/_errors/bad-request-error';
