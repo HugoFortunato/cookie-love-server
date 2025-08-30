@@ -5,6 +5,7 @@ import { hash } from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function seed() {
+  await prisma.sharedPhrase.deleteMany();
   await prisma.user.deleteMany();
 
   const passwordHash = await hash('123456', 1);

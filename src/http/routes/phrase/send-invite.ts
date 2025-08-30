@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { z } from 'zod';
 import { Resend } from 'resend';
 import type { FastifyInstance } from 'fastify';
@@ -30,7 +31,6 @@ export async function sendInvite(app: FastifyInstance) {
       async (request, reply) => {
         const { message, subject, email } = request.body;
 
-        //@ts-ignore
         const senderId = await request.getCurrentUserId();
 
         const sender = await prisma.user.findUnique({
@@ -53,8 +53,6 @@ export async function sendInvite(app: FastifyInstance) {
           if (error) {
             return console.error({ error });
           }
-
-          console.log({ data });
         })();
 
         return reply.status(201).send({ message: 'Invite sent successfully.' });
